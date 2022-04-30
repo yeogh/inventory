@@ -5,10 +5,29 @@ import callApi from "../callApi";
 const SearchPdt = () => {
     const [productlist, setProductList] = useState([]);
 
+    async function getProducts() {
+        try {
+            const response = await fetch ("http://localhost:5001/products/list", {
+                method: "GET",
+                headers: {token: localStorage.token}
+            })
+
+            const parseRes = await response.json();
+
+            console.log(parseRes)
+            setProductList(parseRes)
+
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+
   useEffect(() => {
-    callApi.allProducts().then((data) => {
-    setProductList(data);    
-    });
+      getProducts()
+    // callApi.allProducts().then((data) => {
+    // setProductList(data);    
+    // });
   }, []);
 
   const viewList = productlist.map((element, index) => {
@@ -32,10 +51,11 @@ const SearchPdt = () => {
     
     
     return (
-        <div>
+        <>
             <h1>Products</h1>
             {viewList}        
-        </div>
+    
+        </>
     );
 };
 

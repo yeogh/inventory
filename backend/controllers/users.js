@@ -22,7 +22,7 @@ usersRouter.post("/register", validateInfo, async (req, res) => {
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
 
     if (user.rows.length !==0) {
-        return res.status(401).send("user already exists")
+        return res.status(401).json("User already exists")
     } 
 
     //bcrypt the user password
@@ -59,7 +59,7 @@ usersRouter.post("/login", validateInfo, async (req, res) => {
         const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
 
         if (user.rows.length === 0) {
-            return res.status(401).json("password or email is incorrect")
+            return res.status(401).json("Password or Email is incorrect")
         }
 
         //check if incoming password is the same as database password
