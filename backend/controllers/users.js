@@ -59,14 +59,14 @@ usersRouter.post("/login", validateInfo, async (req, res) => {
         const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
 
         if (user.rows.length === 0) {
-            return res.status(401).json("Password or Email is incorrect")
+            return res.status(401).json("password/ email is incorrect")
         }
 
         //check if incoming password is the same as database password
         const validPassword = await bcrypt.compare(password, user.rows[0].password);
 
         if (!validPassword) {
-            return res.status(401).json("password or email is incorrect")
+            return res.status(401).json("password/ email is incorrect")
         }
 
         //give them jwt token

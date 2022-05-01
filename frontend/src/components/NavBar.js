@@ -7,7 +7,7 @@ const NavBar = ({setAuth, isAuthenticated}) => {
         e.preventDefault();
         localStorage.removeItem("token");
         setAuth(false);
-        toast.success("Logged out successfully!")
+        toast.success("logged out successfully!")
     }
 
 

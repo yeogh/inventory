@@ -1,23 +1,15 @@
 module.exports = (req, res, next) => {
     const { name, password, email } = req.body;
-  
-    function validEmail(userEmail) {
-      return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail);
+
+    function validPassword(userPassword) {
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(userPassword);
     }
   
     if (req.path === "/register") {
-        if (![name, password, email].every(Boolean)) {
-        return res.status(401).json("Missing Credentials");
-      } else if (!validEmail(email)) {
-        return res.status(401).json("Invalid Email");
+        if (!validPassword(password)) {
+        return res.status(401).json("Password must contains min. 8 characters and at least one uppercase, one lowercase letter, one number & one special character");
       }
-    } else if (req.path === "/login") {
-      if (![email, password].every(Boolean)) {
-        return res.status(401).json("Missing Credentials");
-      } else if (!validEmail(email)) {
-        return res.status(401).json("Invalid Email");
-      }
-    }
+    } 
   
     next();
   };
