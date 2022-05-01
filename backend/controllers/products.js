@@ -17,6 +17,22 @@ productsRouter.post('/create', authorization, async(req, res) => {
     }
 } ) 
 
+//search products
+productsRouter.get("/search/:code/:size", authorization, async (req, res) => {
+    try {
+        const {code, size} = req.params;
+        const resultProducts = await pool.query("SELECT * FROM products WHERE code = $1 AND size LIKE $2", [code, size]);
+        res.json(resultProducts.rows);
+        console.log(req.params);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+
+})
+
+
 //view products
 productsRouter.get("/list", authorization, async (req, res) => {
     try {
