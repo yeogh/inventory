@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import callApi from "../callApi";
 
 //Assets
 import Button from "./assets/Button";
@@ -40,23 +39,20 @@ const onSubmitForm = async(e) => {
 
   const viewList = productlist.map((element, index) => {
     return (
-      <tr key={index}>
-      <td className="border-b border-slate-100  p-4 pl-8 text-slate-500 ">
-        {element.code}
-      </td>
-      <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">
-        {element.size}
-      </td>
-      <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">
-        {element.option}
-      </td>
-      <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">
-        {element.quantity}
-      </td>
-      <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">
-        {`${((element.quantity/element.quantity_optimal) * 100)}"% of" ${element.quantity_optimal}`}
-      </td>
-    </tr>
+      <tr key={index} className="bg-white border border-grey-500 md:border-none block md:table-row">
+				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Product Code</span>{element.code}</td>
+				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Size</span>{element.size}</td>
+				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Option</span>{element.option}</td>
+				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Current Qty</span>{element.quantity}</td>
+        <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">%age of Optimal Qty</span>{`${((element.quantity/element.quantity_optimal) * 100)}% of ${element.quantity_optimal}`}</td>
+				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+					<span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
+          <button className="btn bg-green-500 hover:bg-green-700 text-white py-1 px-2 border border-green-500 rounded-lg normal-case">Minus</button>
+          <button className="btn bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-2 border border-yellow-500 rounded-lg normal-case ml-5">Edit</button>
+					<button className="btn bg-red-500 hover:bg-red-700 text-white py-1 px-2 border border-red-500 rounded-lg normal-case ml-5">Delete</button>
+				</td>
+			</tr>
+    
     );
   })
     
@@ -85,45 +81,25 @@ const onSubmitForm = async(e) => {
           </form>
       </div>
       <div id="result">
-            <h2 className="text-base font-bold p-2 text-gray-700">
-            List of Results
-            </h2>
-            <div className="relative rounded-xl overflow-auto">
-              <div className="shadow-sm overflow-hidden my-5">
-                <table className="table-auto">
-                  <thead>
-                    <tr>
-                      <th className="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">
-                      Product Code
-                      </th>
-                      <th className="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                      Size
-                      </th>
-                      <th className="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                      Option
-                      </th>
-                      <th className="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                      Current Quantity
-                      </th>
-                      <th className="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                      Percent of Optimal Quantity
-                      </th>
-                      <th className="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                      Record
-                      </th>
-                      <th className="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                      Add
-                      </th>
-                      <th className="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                      Delete
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>{viewList}</tbody>
-                </table>
-              </div>
-            </div>
-          </div>                   
+        <h2 className="text-base font-bold p-2 text-gray-700">
+        List of Results
+        </h2>
+        <table className="min-w-full border-collapse block md:table">
+	        <thead className="block md:table-header-group">
+  	        <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto-left-full md:left-auto  md:relative ">
+              <th class="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Product Code</th>
+			  	    <th class="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Size</th>
+				      <th class="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Option</th>
+              <th class="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Current Qty</th>
+              <th class="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">% of Optimal Qty</th>
+              <th class="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Action</th>
+						</tr>
+		      </thead>
+		      <tbody class="block md:table-row-group">
+			    {viewList}
+					</tbody>
+	      </table>
+      </div>                   
     </>
     );
 };
