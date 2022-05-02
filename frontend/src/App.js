@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from "react";
-import callApi from "./callApi";
 import { Route, Routes,  Navigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import ProductContext from "./components/product-context";
 
-//components
+//Components
 import Register from "./components/Register";
 import Login from "./components/Login";
 import SearchPdt from "./components/SearchPdt";
 import NavBar from "./components/NavBar";
 import CreatePdt from "./components/CreatePdt";
+import ResultList from "./components/ResultList";
 
 toast.configure();
 
@@ -21,6 +22,8 @@ function App() {
     setIsAuthenticated(boolean);
   };
 
+  const [productlist, setProductList] = useState([]);
+  
   async function isAuth() {
 
     try {
@@ -46,18 +49,21 @@ function App() {
 
   return (
     <>
+    <ProductContext.Provider value={{isAuthenticated, setAuth, productlist, setProductList
+    }}>
     <div className="container">
       <main>
-        <NavBar setAuth={setAuth} isAuthenticated={isAuthenticated}/>
+        <NavBar/>
         <Routes>
           <Route path="/" element={<Navigate replace to="/login"/>}/>
-          <Route path="/login" element={ !isAuthenticated? <Login setAuth={setAuth} />: <Navigate replace to="/search" />}/>
-          <Route path="/register" element={ !isAuthenticated? <Register setAuth={setAuth} /> : <Navigate replace to="/login" />}/>
-          <Route path="/search" element={ isAuthenticated? <SearchPdt setAuth={setAuth} /> : <Navigate replace to='/login'/>}/>
-          <Route path="/create" element={ isAuthenticated? <CreatePdt setAuth={setAuth} /> : <Navigate replace to='/login'/>}/>
+          <Route path="/login" element={ !isAuthenticated? <Login />: <Navigate replace to="/search" />}/>
+          <Route path="/register" element={ !isAuthenticated? <Register/> : <Navigate replace to="/login" />}/>
+          <Route path="/search" element={ isAuthenticated? (<><SearchPdt/> <ResultList/></>) : (<Navigate replace to='/login'/>)}/>
+          <Route path="/create" element={ isAuthenticated? <CreatePdt/> : <Navigate replace to='/login'/>}/>
         </Routes>
       </main>
-    </div>    
+    </div>
+    </ProductContext.Provider>    
     </>
   );
 }

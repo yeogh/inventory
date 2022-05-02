@@ -1,12 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { useNavigate } from "react-router-dom";
 import {toast} from "react-toastify";
+import ProductContext from "./product-context";
 
 //Assets
 import Button from './assets/Button';
 import Input from './assets/Input';
 
-const Register = ({setAuth}) => {
+const Register = () => {
+
+    const pdtCtx = useContext(ProductContext);
 
     const navigate = useNavigate();
 
@@ -40,12 +43,12 @@ const Register = ({setAuth}) => {
             if (parseRes.token) {
                 localStorage.setItem("token", parseRes.token)
 
-                setAuth(true);
+                pdtCtx.setAuth(true);
 
                 toast.success("registered successfully!")
 
             } else {
-                setAuth(false);
+                pdtCtx.setAuth(false);
                 toast.error(parseRes);
             }
 

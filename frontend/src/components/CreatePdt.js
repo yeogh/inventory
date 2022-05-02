@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {toast} from "react-toastify";
+import { useNavigate } from "react-router-dom"
+import ProductContext from "./product-context";
 
 //Assets
 import InputBox from './assets/InputBox';
@@ -8,6 +10,10 @@ import Button from './assets/Button';
 
 const CreatePdt = () => {
 
+    const pdtCtx = useContext(ProductContext);
+
+    const navigate = useNavigate();
+    
     const [userId, setUserId] = useState("");
     
     const [createInputs, setCreateInputs] = useState({
@@ -50,7 +56,7 @@ const CreatePdt = () => {
         e.preventDefault();
         try {
 
-            const body = {code, name, size, option, quantity, quantity_optimal, created_by: userId};
+            const body = {code: code.toUpperCase(), name, size, option, quantity, quantity_optimal, created_by: userId};
 
             const response = await fetch("http://localhost:5001/products/create", {
                 method: "POST",
@@ -75,11 +81,22 @@ const CreatePdt = () => {
             // console.log(userId)
             // console.log(body); 
             // console.log(parseRes)      
+            
+            navigate(`/search`)
+
+            const responseList = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
+            method: "GET",
+            headers: {token: localStorage.token},
+             });
+
+            const parseResList = await responseList.json();
+
+            console.log(parseResList)
+            pdtCtx.setProductList(parseResList)
 
         } catch (err) {
             console.error(err.message)
         }
-
     }
 
 

@@ -1,18 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useNavigate } from "react-router-dom";
 import {toast} from "react-toastify"
+import ProductContext from "./product-context";
 
-const NavBar = ({setAuth, isAuthenticated}) => {
+const NavBar = () => {
+
+    const pdtCtx = useContext(ProductContext);
 
     const navigate = useNavigate();
 
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem("token");
-        setAuth(false);
+        pdtCtx.setAuth(false);
         toast.success("logged out successfully!")
     }
 
+    const onClickCreateProduct = (e) => {
+        e.preventDefault();
+        navigate("/create");
+        pdtCtx.setProductList([]);
+    }
 
     return (
         <>
@@ -20,11 +28,11 @@ const NavBar = ({setAuth, isAuthenticated}) => {
                 <div className="navbar-start">
                     <a className="btn btn-ghost normal-case text-xl" onClick={() => navigate("/search")}>Inventory</a>
                 </div>
-                {!isAuthenticated?  "" :
+                {!pdtCtx.isAuthenticated?  "" :
                 (<div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal p-0">
-                        <li><a onClick={() => navigate("/create")}>Create Product</a></li>
+                        <li><a onClick={onClickCreateProduct}>Create Product</a></li>
                         <li><a onClick={logout}>Logout</a></li>
                     </ul>
                 </div>

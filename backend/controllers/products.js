@@ -75,12 +75,15 @@ productsRouter.get("/:id", authorization, async (req, res) => {
 })
 
 //Update product
-productsRouter.put("/:id", async (req, res) => {
+
+productsRouter.put("/:id", authorization, async (req, res) => {
     try {
         const {id} = req.params;
-        const {quantity} = req.body;
-        const updateProducts = await pool.query(
+           const updateProducts = await pool.query(
             "UPDATE products SET quantity = quantity - 1 WHERE product_id = $1", [id]
+        );
+        const addSales = await pool.query(
+            "INSERT INTO sales (quantity_sold, product_id) VALUES(1, $1)", [id]
         );
 
         res.json("product updated");
