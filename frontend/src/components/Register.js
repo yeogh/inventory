@@ -10,16 +10,16 @@ const Register = ({setAuth}) => {
 
     const navigate = useNavigate();
 
-    const [inputs, setInputs] = useState({
+    const [registerInputs, setRegisterInputs] = useState({
         name: "",
         email: "",
         password: ""
     })
 
-    const {name, email, password} = inputs;
+    const {name, email, password} = registerInputs;
 
     const onChange = (e) => {
-        setInputs({...inputs, [e.target.name] : e.target.value})
+        setRegisterInputs({...registerInputs, [e.target.name] : e.target.value})
     }
 
     const onSubmitForm = async(e) => {

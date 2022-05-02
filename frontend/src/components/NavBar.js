@@ -16,7 +16,7 @@ const NavBar = ({setAuth, isAuthenticated}) => {
 
     return (
         <>
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-base-100 bg-white border-b border-gray-200 sticky top-0 z-50">
                 <div className="navbar-start">
                     <a className="btn btn-ghost normal-case text-xl" onClick={() => navigate("/search")}>Inventory</a>
                 </div>
