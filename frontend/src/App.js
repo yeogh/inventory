@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import SearchPdt from "./components/SearchPdt";
 import NavBar from "./components/NavBar";
+import CreatePdt from "./components/CreatePdt";
 
 toast.configure();
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="/login" element={ !isAuthenticated? <Login setAuth={setAuth} />: <Navigate replace to="/search" />}/>
           <Route path="/register" element={ !isAuthenticated? <Register setAuth={setAuth} /> : <Navigate replace to="/login" />}/>
           <Route path="/search" element={ isAuthenticated? <SearchPdt setAuth={setAuth} /> : <Navigate replace to='/login'/>}/>
+          <Route path="/create" element={ isAuthenticated? <CreatePdt setAuth={setAuth} /> : <Navigate replace to='/login'/>}/>
         </Routes>
       </main>
     </div>    

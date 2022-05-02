@@ -2,12 +2,14 @@ const productsRouter = require("express").Router();
 const pool = require("../db")
 const authorization = require('../middleware/authorization')
 
+
+//Create product
 productsRouter.post('/create', authorization, async(req, res) => {
 
     try {
-    const {code, name, size, option, quantity, quantity_optimal, percent_optimal, created_by} = req.body;  
+    const {code, name, size, option, quantity, quantity_optimal, created_by} = req.body;  
 
-    const newProducts = await pool.query("INSERT INTO products(code, name, size, option, quantity, quantity_optimal, percent_optimal, created_by) VALUES($1, $2, $3, $4, $5, $6, $7, $8)", [code, name, size, option, quantity, quantity_optimal, percent_optimal, created_by]);
+    const newProducts = await pool.query("INSERT INTO products(code, name, size, option, quantity, quantity_optimal, created_by) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", [code, name, size, option, quantity, quantity_optimal, created_by]);
 
     res.json("new product added");
 
@@ -17,7 +19,21 @@ productsRouter.post('/create', authorization, async(req, res) => {
     }
 } ) 
 
-//search products
+//Get User ID
+productsRouter.get("/userid", authorization, async (req, res) => {
+    try {
+        
+        const user = await pool.query("SELECT user_id, name FROM users WHERE user_id = $1", [req.user]);
+        res.json(user.rows[0]);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error")
+    }
+})
+
+
+//Search products
 productsRouter.get("/search/:code/:size", authorization, async (req, res) => {
     try {
         const {code, size} = req.params;
@@ -33,7 +49,7 @@ productsRouter.get("/search/:code/:size", authorization, async (req, res) => {
 })
 
 
-//view products
+//View products
 productsRouter.get("/list", authorization, async (req, res) => {
     try {
         const allProducts = await pool.query("SELECT * FROM products");
@@ -46,7 +62,7 @@ productsRouter.get("/list", authorization, async (req, res) => {
 
 })
 
-//view single product
+//View single product
 productsRouter.get("/:id", authorization, async (req, res) => {
     try {
         const {id} = req.params;
@@ -58,7 +74,7 @@ productsRouter.get("/:id", authorization, async (req, res) => {
     }
 })
 
-//update product
+//Update product
 productsRouter.put("/:id", async (req, res) => {
     try {
         const {id} = req.params;
@@ -75,7 +91,7 @@ productsRouter.put("/:id", async (req, res) => {
     }
 })
 
-//delete product
+//Delete product
 productsRouter.delete("/:id", authorization, async (req, res) => {
     try {
         const {id} = req.params;
@@ -90,6 +106,5 @@ productsRouter.delete("/:id", authorization, async (req, res) => {
         res.status(500).json("server error");
     }
 })
-
 
 module.exports = productsRouter;

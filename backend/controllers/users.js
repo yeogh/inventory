@@ -80,7 +80,7 @@ usersRouter.post("/login", validateInfo, async (req, res) => {
 })
 
 
-//
+//Verify token is authentic
 usersRouter.get("/is-verify", authorization, async (req, res) => {
     try {
         res.json(true);
