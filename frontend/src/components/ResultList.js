@@ -6,11 +6,12 @@ const ResultList = () => {
 
     const pdtCtx = useContext(ProductContext);
 
+    const {code, size} = pdtCtx.searchInputs;
+
     const onClickMinus = async(element) => {
         // e.preventDefault();
         console.log(pdtCtx.productlist);
         try {
-            
             let index = pdtCtx.productlist.indexOf(element);
             console.log(index);
             const id = pdtCtx.productlist[index]["product_id"];
@@ -22,7 +23,17 @@ const ResultList = () => {
 
             const parseRes = await response.json();
             toast.success(parseRes)
+            
+            const responseSearch = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
+            method: "GET",
+            headers: {token: localStorage.token},
+            });
 
+            const parseResSearch = await responseSearch.json();
+
+            console.log(parseResSearch);
+            pdtCtx.setProductList(parseResSearch);
+            
         } catch (err) {
             console.error(err.message)
         }

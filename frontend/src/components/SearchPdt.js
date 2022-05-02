@@ -10,15 +10,10 @@ const SearchPdt = () => {
 
   const pdtCtx = useContext(ProductContext);
 
-  const [searchInputs, setSearchInputs] = useState({
-    code:"",
-    size:"%25"
-  })    
-
-  const {code, size} = searchInputs;
+  const {code, size} = pdtCtx.searchInputs;
 
   const onChange = (e) => {
-    setSearchInputs({...searchInputs, [e.target.name] : e.target.value})
+    pdtCtx.setSearchInputs({...pdtCtx.searchInputs, [e.target.name] : e.target.value})
 }
 
 const onSubmitForm = async(e) => {
@@ -34,8 +29,6 @@ const onSubmitForm = async(e) => {
 
   console.log(parseRes)
   pdtCtx.setProductList(parseRes)
-
-  setSearchInputs({code:"", size:"%25"});
 
 } catch (err) {
   console.error(err.message);
