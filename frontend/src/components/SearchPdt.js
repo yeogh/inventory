@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 //Assets
 import Button from "./assets/Button";
 import InputBox from "./assets/InputBox";
-// import Dropdown from "./assets/Dropdown";
+import Dropdown from "./assets/Dropdown";
 
 const SearchPdt = () => {
 
@@ -47,7 +47,7 @@ const viewList = productlist.map((element, index) => {
 				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Size</span>{element.size}</td>
 				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Option</span>{element.option}</td>
 				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Current Qty</span>{element.quantity}</td>
-        <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">%age of Optimal Qty</span>{`${((element.quantity/element.quantity_optimal) * 100)}% of ${element.quantity_optimal}`}</td>
+        <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">%age of Optimal Qty</span>{`${Math.floor(((element.quantity/element.quantity_optimal) * 100))}% of ${element.quantity_optimal}`}</td>
 				<td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
 					<span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
           <button className="btn bg-green-500 hover:bg-green-700 text-white py-1 px-2 border border-green-500 rounded-lg normal-case">Minus</button>
@@ -66,7 +66,7 @@ const viewList = productlist.map((element, index) => {
         <h1>Search Products</h1>
           <form className="flex flex-row items-center justify-center mt-4" onSubmit={onSubmitForm}>
             <InputBox className="mb-6 mr-6 w-48" label="Code" type="text" name="code" value={code} onChange={onChange}/>
-            <div className="mb-6 mr-6 w-24">
+            {/* <div className="mb-6 mr-6 w-24">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Size</label>
               <select className="w-full h-12 px-4 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg focus:border-blue focus:outline-none focus:ring focus:ring-blue focus:ring-opacity-20 p-1" name="size" onChange={onChange}>
                 <option value="%25">All</option>
@@ -76,8 +76,8 @@ const viewList = productlist.map((element, index) => {
                 <option value="L">L</option>
                 <option value="XL">XL</option>
               </select>
-            </div>
-            {/* <Dropdown className="mb-6 mr-6 w-24" label="Size" onChange={onChange} value="%25" firstOptionLabel="All"/> */}
+            </div> */}
+            <Dropdown className="mb-6 mr-6 w-24" label="Size" name="size" onChange={onChange} value="%25" firstOptionLabel="All"/>
             <Button type="submit" text="Search" />
           </form>
       </div>
