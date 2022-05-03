@@ -101,7 +101,7 @@ productsRouter.put("/:id", authorization, async (req, res) => {
     }
 })
 
-//Update product (Add)
+//Update product (Plus)
 productsRouter.patch("/:id", authorization, async (req, res) => {
     try {
         const {id} = req.params;

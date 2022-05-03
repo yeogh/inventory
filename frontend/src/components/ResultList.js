@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {toast} from "react-toastify";
 import ProductContext from './product-context';
 
-import Modal from './Modal';
+import AddQtyModal from './AddQtyModal';
 
 //Assets
 // import ButtonMinus from './assets/ButtonMinus';
@@ -10,10 +10,21 @@ import Modal from './Modal';
 const ResultList = () => {
 
     const pdtCtx = useContext(ProductContext);
-    const [addQty, setAddQty] = useState(false);
 
+    const [singlePdt, setSinglePdt] = useState({
+        code: "",
+        name: "",
+        size: "",
+        option:"",
+        quantity:""
+    })
+    const [qtyToIncrease, setQtyToIncrease] = useState("");
+    const [addQty, setAddQty] = useState(false);
+    
     const {code, size} = pdtCtx.searchInputs;
 
+
+    //Update Qty (Minus)
     const onClickMinus = async(element) => {
         // e.preventDefault();
         console.log(pdtCtx.productlist);
@@ -45,10 +56,81 @@ const ResultList = () => {
         }
     }
 
-    const onClickPlus = () => {
-        setAddQty(true);
+    //Update Qty (Plus)
+    const onClickClose = () => {
+        setAddQty(false);
+        setQtyToIncrease("");
     }
 
+    const onClickPlus = async(element) => {
+        try {
+            let indexplus = pdtCtx.productlist.indexOf(element);
+            console.log(indexplus);
+            const idplus = pdtCtx.productlist[indexplus]["product_id"];
+
+            const response = await fetch (`http://localhost:5001/products/${idplus}`, {
+            method: "GET",
+            headers: {token: localStorage.token},
+             });
+
+            const parseRes = await response.json();
+            console.log(parseRes);
+            setSinglePdt(parseRes);
+            console.log(singlePdt);
+            
+            setAddQty(true);
+            
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
+
+    const onSubmitModal = async(e) => {
+        e.preventDefault();
+        try {
+            if (qtyToIncrease > 0) {
+            const body = {increase: qtyToIncrease};
+
+            const response = await fetch(`http://localhost:5001/products/${singlePdt[0]["product_id"]}`, {
+                method: "PATCH",
+                headers: {token: localStorage.token,
+                "Content-Type": "application/json"},
+                body: JSON.stringify(body)
+            });
+
+            const parseRes = await response.json();
+            toast.success(parseRes)
+
+            setAddQty(false);
+            setSinglePdt({
+                code: "",
+                name: "",
+                size: "",
+                option:"",
+                quantity:""
+            })
+            setQtyToIncrease("");
+
+            const responseList = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
+            method: "GET",
+            headers: {token: localStorage.token},
+             });
+
+            const parseResList = await responseList.json();
+
+            console.log(parseResList)
+            pdtCtx.setProductList(parseResList)
+
+        } else {
+            toast.error("quantity to add should be more than 0");
+        }
+
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
+
+    //View List
     pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
     
     const viewList = pdtCtx.productlist.map((element, index) => {
@@ -63,7 +145,7 @@ const ResultList = () => {
                     <span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
                     {/* <ButtonMinus element={element}/> */}
                     <button className="btn bg-green-500 hover:bg-green-700 text-white border border-green-500 rounded-lg text-2xl px-4" onClick={() => onClickMinus(element)}>-</button>
-                    <button className="btn bg-yellow-500 hover:bg-yellow-700 text-white border border-yellow-500 rounded-lg text-2xl px-3 ml-5" data-modal-toggle="defaultModal" onClick={onClickPlus}>+</button>
+                    <button className="btn bg-yellow-500 hover:bg-yellow-700 text-white border border-yellow-500 rounded-lg text-2xl px-3 ml-5" data-modal-toggle="defaultModal" onClick={() => onClickPlus(element)}>+</button>
                     <button className="btn bg-red-500 hover:bg-red-700 text-white py-1 px-2 border border-red-500 rounded-lg normal-case ml-5">Delete</button>
                 </td>
             </tr>
@@ -92,7 +174,7 @@ const ResultList = () => {
 				    </tbody>
 	            </table>
             </div>
-            {addQty && <Modal/>}
+            {addQty? <AddQtyModal onClickClose={onClickClose} modalCode={singlePdt[0]["code"]} modalName={singlePdt[0]["name"]} modalSize={singlePdt[0]["size"]} modalOption={singlePdt[0]["option"]} modalQty={singlePdt[0]["quantity"]} increaseQty={qtyToIncrease} onChange={(e) => setQtyToIncrease(e.target.value)} onSubmitModal={onSubmitModal}/> : null}
         </>
     );
 };

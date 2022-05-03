@@ -4,7 +4,7 @@ import React from 'react';
 import InputBox from './assets/InputBox';
 import Button from './assets/Button';
 
-const Modal = ({onClickClose, modalCode, modalName, modalSize, modalOption, modalQty, increaseQty, onChange, onSubmitModal}) => {
+const AddQtyModal = ({onClickClose, modalCode, modalName, modalSize, modalOption, modalQty, increaseQty, onChange, onSubmitModal}) => {
 
     return (
     <>
@@ -62,4 +62,4 @@ const Modal = ({onClickClose, modalCode, modalName, modalSize, modalOption, moda
     );
 };
 
-export default Modal;
+export default AddQtyModal;
