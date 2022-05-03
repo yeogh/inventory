@@ -24,7 +24,7 @@ const ResultList = () => {
     const {code, size} = pdtCtx.searchInputs;
 
 
-    //Update Qty (Minus)
+    //Update product (Minus)
     const onClickMinus = async(element) => {
         // e.preventDefault();
         console.log(pdtCtx.productlist);
@@ -56,7 +56,7 @@ const ResultList = () => {
         }
     }
 
-    //Update Qty (Plus)
+    //Update product (Plus)
     const onClickClose = () => {
         setAddQty(false);
         setQtyToIncrease("");
@@ -130,6 +130,10 @@ const ResultList = () => {
         }
     }
 
+
+    //Delete product
+
+
     //View List
     pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
     
@@ -141,6 +145,7 @@ const ResultList = () => {
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Option</span>{element.option}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Current Qty</span>{element.quantity}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">%age of Optimal Qty</span>{`${Math.floor(((element.quantity/element.quantity_optimal) * 100))}% of ${element.quantity_optimal}`}</td>
+                <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Qty Sold</span>{element.quantity_sold}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
                     {/* <ButtonMinus element={element}/> */}
@@ -166,6 +171,7 @@ const ResultList = () => {
 				            <th className="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Option</th>
                             <th className="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Current Qty</th>
                             <th className="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">% of Optimal Qty</th>
+                            <th className="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Qty Sold</th>
                             <th className="bg-gray-600 p-2 font-bold md:border md:border-grey-500 text-left block md:table-cell">Action</th>
 						</tr>
 		            </thead>
