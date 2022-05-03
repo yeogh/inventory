@@ -39,6 +39,9 @@ const ResultList = () => {
         }
     }
 
+   pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
+    
+//    console.log(pdtCtx.productlist);
 
     const viewList = pdtCtx.productlist.map((element, index) => {
         return (
