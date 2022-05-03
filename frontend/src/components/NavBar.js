@@ -20,6 +20,10 @@ const NavBar = () => {
         e.preventDefault();
         navigate("/create");
         pdtCtx.setProductList([]);
+        pdtCtx.setSearchInputs({
+            code:"",
+            size:"%25"
+          });
     }
 
     return (

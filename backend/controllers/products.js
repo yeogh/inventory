@@ -9,6 +9,14 @@ productsRouter.post('/create', authorization, async(req, res) => {
     try {
     const {code, name, size, option, quantity, quantity_optimal, created_by} = req.body;  
 
+    //check if product (i.e. code, size and option combi) exist (if yes, throw error)
+    const product = await pool.query("SELECT * FROM products WHERE code = $1 AND size = $2 AND option = $3", [code, size, option]);
+
+    if (product.rows.length !==0) {
+        return res.status(401).json("product already exists")
+    }
+
+    //insert new product in table
     const newProducts = await pool.query("INSERT INTO products(code, name, size, option, quantity, quantity_optimal, created_by) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", [code, name, size, option, quantity, quantity_optimal, created_by]);
 
     res.json("new product added");

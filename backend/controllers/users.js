@@ -6,12 +6,6 @@ const validateInfo = require("../middleware/validateInfo")
 const authorization = require("../middleware/authorization")
 
 
-// const usernameOrPasswordError = {
-//     status: 'error',
-//     message: 'username or password error'
-//   }
-
-
 //Register 
 usersRouter.post("/register", validateInfo, async (req, res) => {
     try {
@@ -22,7 +16,7 @@ usersRouter.post("/register", validateInfo, async (req, res) => {
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
 
     if (user.rows.length !==0) {
-        return res.status(401).json("User already exists")
+        return res.status(401).json("user already exists")
     } 
 
     //bcrypt the user password

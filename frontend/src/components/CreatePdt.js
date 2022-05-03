@@ -56,7 +56,7 @@ const CreatePdt = () => {
         e.preventDefault();
         try {
 
-            const body = {code: code.toUpperCase(), name, size, option, quantity, quantity_optimal, created_by: userId};
+            const body = {code: code.toUpperCase(), name: name.toUpperCase(), size, option: option.toUpperCase(), quantity, quantity_optimal, created_by: userId};
 
             const response = await fetch("http://localhost:5001/products/create", {
                 method: "POST",
@@ -66,6 +66,7 @@ const CreatePdt = () => {
             });
 
             const parseRes = await response.json();
+            if (parseRes !== "product already exists") {
             toast.success(parseRes)
 
             setCreateInputs({
@@ -96,8 +97,13 @@ const CreatePdt = () => {
             console.log(parseResList)
             pdtCtx.setProductList(parseResList)
 
+        } else {
+            toast.error(parseRes);
+        }
+
         } catch (err) {
             console.error(err.message)
+
         }
     }
 
