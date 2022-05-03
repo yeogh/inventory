@@ -123,11 +123,19 @@ productsRouter.patch("/:id", authorization, async (req, res) => {
 productsRouter.delete("/:id", authorization, async (req, res) => {
     try {
         const {id} = req.params;
+
+        //check if product has record of sales (if yes, throw error)
+        const checkDeleteProduct = await pool.query("SELECT quantity_sold FROM products WHERE product_id = $1", [id]);
+        console.log(checkDeleteProduct);
+        if (checkDeleteProduct.rows[0]["quantity_sold"] > 0) {
+        return res.status(401).json("product with sales record cannot be deleted")
+        }
+
         const deleteProducts = await pool.query(
             "DELETE FROM products WHERE product_id = $1", [id]
         );
 
-        res.json({status: "ok", message: "deleted"});
+        res.json("product deleted");
         
     } catch (err) {
         console.error(err.message);
