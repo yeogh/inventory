@@ -83,6 +83,8 @@ const CreatePdt = () => {
             // console.log(parseRes)      
             
             navigate(`/search`)
+            
+            pdtCtx.setSearchInputs({code, size});
 
             const responseList = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
             method: "GET",
