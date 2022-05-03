@@ -27,7 +27,7 @@ productsRouter.post('/create', authorization, async(req, res) => {
     }
 } ) 
 
-//Get User ID
+//Get User Info
 productsRouter.get("/userid", authorization, async (req, res) => {
     try {
         
@@ -82,8 +82,7 @@ productsRouter.get("/:id", authorization, async (req, res) => {
     }
 })
 
-//Update product
-
+//Update product (Minus)
 productsRouter.put("/:id", authorization, async (req, res) => {
     try {
         const {id} = req.params;
@@ -94,6 +93,23 @@ productsRouter.put("/:id", authorization, async (req, res) => {
             "INSERT INTO sales (quantity_sold, product_id) VALUES(1, $1)", [id]
         );
 
+        res.json("product updated");
+        
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+})
+
+//Update product (Add)
+productsRouter.patch("/:id", authorization, async (req, res) => {
+    try {
+        const {id} = req.params;
+        const {increase} = req.body;
+           const updateProducts = await pool.query(
+            "UPDATE products SET quantity = quantity + $1 WHERE product_id = $2", [increase, id]
+        );
+        
         res.json("product updated");
         
     } catch (err) {

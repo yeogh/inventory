@@ -1,10 +1,16 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {toast} from "react-toastify";
 import ProductContext from './product-context';
+
+import Modal from './Modal';
+
+//Assets
+// import ButtonMinus from './assets/ButtonMinus';
 
 const ResultList = () => {
 
     const pdtCtx = useContext(ProductContext);
+    const [addQty, setAddQty] = useState(false);
 
     const {code, size} = pdtCtx.searchInputs;
 
@@ -39,10 +45,12 @@ const ResultList = () => {
         }
     }
 
-   pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
-    
-//    console.log(pdtCtx.productlist);
+    const onClickPlus = () => {
+        setAddQty(true);
+    }
 
+    pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
+    
     const viewList = pdtCtx.productlist.map((element, index) => {
         return (
             <tr key={index} className="bg-white border border-grey-500 md:border-none block md:table-row">
@@ -53,8 +61,9 @@ const ResultList = () => {
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">%age of Optimal Qty</span>{`${Math.floor(((element.quantity/element.quantity_optimal) * 100))}% of ${element.quantity_optimal}`}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                    {/* <ButtonMinus element={element}/> */}
                     <button className="btn bg-green-500 hover:bg-green-700 text-white border border-green-500 rounded-lg text-2xl px-4" onClick={() => onClickMinus(element)}>-</button>
-                    <button className="btn bg-yellow-500 hover:bg-yellow-700 text-white border border-yellow-500 rounded-lg text-2xl px-3 ml-5">+</button>
+                    <button className="btn bg-yellow-500 hover:bg-yellow-700 text-white border border-yellow-500 rounded-lg text-2xl px-3 ml-5" data-modal-toggle="defaultModal" onClick={onClickPlus}>+</button>
                     <button className="btn bg-red-500 hover:bg-red-700 text-white py-1 px-2 border border-red-500 rounded-lg normal-case ml-5">Delete</button>
                 </td>
             </tr>
@@ -83,6 +92,7 @@ const ResultList = () => {
 				    </tbody>
 	            </table>
             </div>
+            {addQty && <Modal/>}
         </>
     );
 };
