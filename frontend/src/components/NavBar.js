@@ -14,6 +14,11 @@ const NavBar = () => {
         localStorage.removeItem("token");
         pdtCtx.setAuth(false);
         toast.success("logged out successfully!")
+        pdtCtx.setProductList([]);
+        pdtCtx.setSearchInputs({
+            code:"",
+            size:"%25"
+          });
     }
 
     const onClickCreateProduct = (e) => {
