@@ -144,7 +144,7 @@ productsRouter.delete("/:id", authorization, async (req, res) => {
 })
 
 
-//Report
+//Report details
 productsRouter.get("/reportdetails/:startdate/:enddate", authorization, async (req, res) => {
     try {
         const {startdate, enddate} = req.params;
@@ -159,6 +159,23 @@ productsRouter.get("/reportdetails/:startdate/:enddate", authorization, async (r
             convertDateArray[i] = new Date(dateArray[i].getTime() + (8*60*60*1000));
             rptProducts.rows[i]["date"] = convertDateArray[i]
         }
+
+        res.json(rptProducts.rows);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+
+})
+
+
+//Report summary
+productsRouter.get("/reportsummary/:startdate/:enddate", authorization, async (req, res) => {
+    try {
+        const {startdate, enddate} = req.params;
+     
+        const rptProducts = await pool.query("SELECT products.code, products.size, products.option, products.product_id, COUNT(*) FROM products INNER JOIN sales ON products.product_id = sales.product_id WHERE sales.date BETWEEN $1 AND $2 GROUP BY products.product_id", [startdate, enddate]);
 
         res.json(rptProducts.rows);
 
