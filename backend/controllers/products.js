@@ -149,7 +149,7 @@ productsRouter.get("/reportdetails/:startdate/:enddate", authorization, async (r
     try {
         const {startdate, enddate} = req.params;
      
-        const rptProducts = await pool.query("SELECT products.code, products.size, products.option, products.product_id, sales.date FROM products INNER JOIN sales ON products.product_id = sales.product_id WHERE DATE(sales.date) BETWEEN $1 AND $2 ORDER BY products.code", [startdate, enddate]);
+        const rptProducts = await pool.query("SELECT products.code, products.size, products.option, products.product_id, sales.date FROM products INNER JOIN sales ON products.product_id = sales.product_id WHERE DATE(sales.date) BETWEEN $1 AND $2 ORDER BY products.code, products.size", [startdate, enddate]);
 
         //use this to correct the timezone data issue (json returns in ISO timezone 8 hours late compared to db)
         for (let i=0; i<rptProducts.rows.length; i++) {

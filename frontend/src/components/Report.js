@@ -77,7 +77,28 @@ const Report = () => {
         );
       });
     
-    //Summary View
+    //Details View
+
+     const convertdate = (element) => {
+        const dataDate = new Date(element);
+
+        const dataDayOfMonth = dataDate.getDate();
+        const dataMonth = dataDate.getMonth(); // Be careful! January is 0, not 1
+        const dataYear = dataDate.getFullYear();
+        
+        const dateString = dataDayOfMonth + "-" + (dataMonth + 1) + "-" + dataYear;
+        
+        return dateString;
+
+     } 
+
+     const converttime = (element) => {
+        const dataDate = new Date(element);
+        const timeString = dataDate.toISOString().substr(11,8);
+        return timeString;
+
+     } 
+
     const detailsView = reportDetailsList.map((element, index) => {
             
         return (
@@ -90,7 +111,9 @@ const Report = () => {
             </td>
             <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">{element.option}
             </td>
-            <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">{element.date}
+            <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">{convertdate(element.date)}
+            </td>
+            <td className="border-b border-slate-100 p-4 pl-8 text-slate-500">{converttime(element.date)}
             </td>
           </tr>
         );
@@ -164,7 +187,10 @@ const Report = () => {
                                                 Option
                                                 </th>
                                                 <th className="font-normal text-slate-600 border-b p-4 pl-8 pt-0 pb-3 text-left">
-                                                Timestamp
+                                                Date
+                                                </th>
+                                                <th className="font-normal text-slate-600 border-b p-4 pl-8 pt-0 pb-3 text-left">
+                                                Time
                                                 </th>
                                             </tr>
                                         </thead>
