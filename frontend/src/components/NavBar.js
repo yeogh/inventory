@@ -29,6 +29,16 @@ const NavBar = () => {
           });
     }
 
+    const onClickReport = (e) => {
+        e.preventDefault();
+        navigate("/report");
+        pdtCtx.setProductList([]);
+        pdtCtx.setSearchInputs({
+            code:"",
+            size:"%25"
+          });
+    }
+
     const onClickLogout = (e) => {
         e.preventDefault();
         localStorage.removeItem("token");
@@ -53,6 +63,7 @@ const NavBar = () => {
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal p-0">
                         <li><a onClick={onClickCreateProduct}>Create Product</a></li>
+                        <li><a onClick={onClickReport}>Report</a></li>
                         <li><a onClick={onClickLogout}>Logout</a></li>
                     </ul>
                 </div>
@@ -62,6 +73,7 @@ const NavBar = () => {
                     </label>
                     <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li><a onClick={onClickCreateProduct}>Create Product</a></li>
+                        <li><a onClick={onClickReport}>Report</a></li>
                         <li><a onClick={onClickLogout}>Logout</a></li>
                     </ul>
                 </div>

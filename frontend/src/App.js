@@ -11,6 +11,7 @@ import SearchPdt from "./components/SearchPdt";
 import NavBar from "./components/NavBar";
 import CreatePdt from "./components/CreatePdt";
 import ResultList from "./components/ResultList";
+import Report from "./components/Report";
 
 toast.configure();
 
@@ -25,7 +26,7 @@ function App() {
   const [searchInputs, setSearchInputs] = useState({
     code:"",
     size:"%25"
-  })    
+  });    
 
   const [productlist, setProductList] = useState([]);
   
@@ -65,6 +66,7 @@ function App() {
           <Route path="/register" element={ !isAuthenticated? <Register/> : <Navigate replace to="/login" />}/>
           <Route path="/search" element={ isAuthenticated? (<><SearchPdt/> <ResultList/></>) : (<Navigate replace to='/login'/>)}/>
           <Route path="/create" element={ isAuthenticated? <CreatePdt/> : <Navigate replace to='/login'/>}/>
+          <Route path="/report" element={ isAuthenticated? <Report/> : <Navigate replace to='/login'/>}/>
         </Routes>
       </main>
     </div>
