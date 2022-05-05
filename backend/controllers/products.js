@@ -74,7 +74,7 @@ productsRouter.get("/list", authorization, async (req, res) => {
 productsRouter.get("/:id", authorization, async (req, res) => {
     try {
         const {id} = req.params;
-        const singleProduct = await pool.query("SELECT products.code, products.name,products.size, products.option, products.product_id, products.quantity, users.name AS created_name FROM products INNER JOIN users ON products.created_by = users.user_id WHERE products.product_id = $1", [id]);
+        const singleProduct = await pool.query("SELECT products.code, products.name,products.size, products.option, products.product_id, products.quantity, products.quantity_sold, users.name AS created_name FROM products INNER JOIN users ON products.created_by = users.user_id WHERE products.product_id = $1", [id]);
 
         res.json(singleProduct.rows);
 

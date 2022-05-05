@@ -3,9 +3,8 @@ import {toast} from "react-toastify";
 import ProductContext from './product-context';
 
 import AddQtyModal from './AddQtyModal';
+import DeleteModal from './DeleteModal';
 
-//Assets
-// import ButtonMinus from './assets/ButtonMinus';
 
 const ResultList = () => {
 
@@ -16,11 +15,14 @@ const ResultList = () => {
         name: "",
         size: "",
         option:"",
-        quantity:""
+        quantity:"",
+        created_name:"",
+        quantity_sold:""
     })
     const [qtyToIncrease, setQtyToIncrease] = useState("");
     const [addQty, setAddQty] = useState(false);
-    
+    const [deletePdt, setDeletePdt] = useState(false);
+
     const {code, size} = pdtCtx.searchInputs;
 
 
@@ -57,7 +59,7 @@ const ResultList = () => {
     }
 
     //Update product (Plus)
-    const onClickClose = () => {
+    const onClickClosePlus = () => {
         setAddQty(false);
         setQtyToIncrease("");
     }
@@ -85,7 +87,7 @@ const ResultList = () => {
         }
     }
 
-    const onSubmitModal = async(e) => {
+    const onSubmitAddModal = async(e) => {
         e.preventDefault();
         try {
             if (qtyToIncrease > 0) {
@@ -107,7 +109,9 @@ const ResultList = () => {
                 name: "",
                 size: "",
                 option:"",
-                quantity:""
+                quantity:"",
+                created_name: "",
+                quantity_sold:""
             })
             setQtyToIncrease("");
 
@@ -132,25 +136,63 @@ const ResultList = () => {
 
 
     //Delete product
+    const onClickCloseDelete = () => {
+        setDeletePdt(false);
+    }
+
     const onClickDelete = async(element) => {
-        
+
         try {
             let indexdelete = pdtCtx.productlist.indexOf(element);
             console.log(indexdelete);
             const iddelete = pdtCtx.productlist[indexdelete]["product_id"];
 
+            if(pdtCtx.productlist[indexdelete]["quantity_sold"] !== 0) {
+                toast.error("product with sales record cannot be deleted");
+            } else {
             const response = await fetch (`http://localhost:5001/products/${iddelete}`, {
+                method: "GET",
+                headers: {token: localStorage.token},
+             });
+
+            const parseRes = await response.json();
+            console.log(parseRes);
+            setSinglePdt(parseRes);
+            console.log(singlePdt);
+            
+            setDeletePdt(true); 
+        }          
+           
+        } catch (err) {
+            console.error(err.message)
+        }
+        
+    };
+
+    const onSubmitDeleteModal = async(e) => {
+        e.preventDefault();
+        try {
+            
+            const response = await fetch (`http://localhost:5001/products/${singlePdt[0]["product_id"]}`, {
             method: "DELETE",
             headers: {token: localStorage.token},
              });
 
+
             const parseRes = await response.json();
 
-            if (parseRes === "product with sales record cannot be deleted") {
-                toast.error(parseRes)
-            } else {
-                toast.success(parseRes)
-            }
+            toast.success(parseRes);
+            
+            setDeletePdt(false);
+            setSinglePdt({
+                code: "",
+                name: "",
+                size: "",
+                option:"",
+                quantity:"",
+                created_name: "",
+                quantity_sold:""
+            })
 
             const responseSearch = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
             method: "GET",
@@ -161,14 +203,51 @@ const ResultList = () => {
 
             console.log(parseResSearch);
             pdtCtx.setProductList(parseResSearch);
+
             
         } catch (err) {
             console.error(err.message)
         }
     }
 
-    //View List
 
+    // const onSubmitDeleteModal = async(element) => {
+        
+    //     try {
+    //         let indexdelete = pdtCtx.productlist.indexOf(element);
+    //         console.log(indexdelete);
+    //         const iddelete = pdtCtx.productlist[indexdelete]["product_id"];
+
+    //         const response = await fetch (`http://localhost:5001/products/${iddelete}`, {
+    //         method: "DELETE",
+    //         headers: {token: localStorage.token},
+    //          });
+
+    //         const parseRes = await response.json();
+
+    //         if (parseRes === "product with sales record cannot be deleted") {
+    //             toast.error(parseRes)
+    //         } else {
+    //             toast.success(parseRes)
+    //         }
+
+    //         const responseSearch = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
+    //         method: "GET",
+    //         headers: {token: localStorage.token},
+    //         });
+
+    //         const parseResSearch = await responseSearch.json();
+
+    //         console.log(parseResSearch);
+    //         pdtCtx.setProductList(parseResSearch);
+            
+    //     } catch (err) {
+    //         console.error(err.message)
+    //     }
+    // }
+
+
+    //View List
     const computePercent = (qty, qtyoptimal) => {
         const percent = Math.floor(((qty/qtyoptimal) * 100));
         return percent;
@@ -183,7 +262,7 @@ const ResultList = () => {
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Size</span>{element.size}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Option</span>{element.option}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Current Qty</span>{element.quantity}</td>
-                <td className={`p-2 md:border md:border-grey-500 text-left block md:table-cell ${computePercent(element.quantity, element.quantity_optimal) < 21 ? "bg-red-100 md:bg-red-100" : ""}`}><span className="inline-block w-1/3 md:hidden font-bold">%age of Optimal Qty</span>{computePercent(element.quantity, element.quantity_optimal)}{`% of ${element.quantity_optimal}`}</td>
+                <td className={`p-2 md:border md:border-grey-500 text-left block md:table-cell ${computePercent(element.quantity, element.quantity_optimal) < 21 ? "text-red-500 font-medium md:text-red-500 md:font-medium" : ""}`}><span className="inline-block w-1/3 md:hidden font-bold">%age of Optimal Qty</span>{computePercent(element.quantity, element.quantity_optimal)}{`% of ${element.quantity_optimal}`}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Qty Sold</span>{element.quantity_sold}</td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
@@ -219,7 +298,10 @@ const ResultList = () => {
 				    </tbody>
 	            </table>
             </div>
-            {addQty? <AddQtyModal onClickClose={onClickClose} modalCode={singlePdt[0]["code"]} modalName={singlePdt[0]["name"]} modalSize={singlePdt[0]["size"]} modalOption={singlePdt[0]["option"]} modalQty={singlePdt[0]["quantity"]} increaseQty={qtyToIncrease} onChange={(e) => setQtyToIncrease(e.target.value)} createdBy={singlePdt[0]["created_name"]}onSubmitModal={onSubmitModal}/> : null}
+
+            {addQty? <AddQtyModal onClickClose={onClickClosePlus} modalCode={singlePdt[0]["code"]} modalName={singlePdt[0]["name"]} modalSize={singlePdt[0]["size"]} modalOption={singlePdt[0]["option"]} modalQty={singlePdt[0]["quantity"]} increaseQty={qtyToIncrease} onChange={(e) => setQtyToIncrease(e.target.value)} createdBy={singlePdt[0]["created_name"]}onSubmitModal={onSubmitAddModal}/> : null}
+
+            {deletePdt? <DeleteModal onClickClose={onClickCloseDelete} modalCode={singlePdt[0]["code"]} modalName={singlePdt[0]["name"]} modalSize={singlePdt[0]["size"]} modalOption={singlePdt[0]["option"]} modalQty={singlePdt[0]["quantity"]} createdBy={singlePdt[0]["created_name"]} onSubmitModal={onSubmitDeleteModal}/> : null}
         </>
     );
 };
