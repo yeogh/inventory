@@ -19,6 +19,15 @@ const Register = () => {
         password: "",
         permission:""
     })
+    const [seePwd, setSeePwd] = useState(false);
+
+    const onClickSeePwd = () => {
+        if (seePwd === true) {
+            setSeePwd(false)
+        } else if (seePwd === false) {
+            setSeePwd(true)
+        }
+    };
 
     const {name, email, password, permission} = registerInputs;
 
@@ -67,7 +76,13 @@ const Register = () => {
             <form onSubmit={onSubmitForm}>
                 <Input type="text" name="name" value={name} onChange={onChange} htmlFor="name" label="Username"/>
                 <Input type="email" name="email" value={email} onChange={onChange} htmlFor="email" label="Email"/>
-                <Input type="password" name="password" value={password} onChange={onChange} htmlFor="password" label="Password"/>
+                <div className='flex flex-row'><Input type={seePwd?"text" :"password"} name="password" value={password} onChange={onChange} htmlFor="password" label="Password"/> <span
+                className="ml-2 text-primary hover:text-primary hover: cursor-pointer"
+                onClick={onClickSeePwd}
+                >
+                {seePwd? "Hide" : "See"}
+                </span></div>
+
                 <div className="mb-6 mr-6 w-40">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Role</label>
                     <select className="w-full h-12 px-4 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg focus:border-blue focus:outline-none focus:ring focus:ring-blue focus:ring-opacity-20 p-1" name="permission" onChange={onChange}>
