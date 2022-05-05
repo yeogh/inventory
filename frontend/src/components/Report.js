@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useState, useRef} from 'react';
+// import {useDownloadExcel} from 'react-export-table-to-excel';
 
 //Assets
 import Button from "./assets/Button";
@@ -16,6 +17,9 @@ const Report = () => {
     const [reportDetailsList, setReportDetailsList] = useState([]);
 
     const [openTab, setOpenTab] = useState(1);
+
+    const tableSummary = useRef(null);
+    const tableDetails = useRef(null);
 
     const {startdate, enddate} = reportSearch;
 
@@ -78,16 +82,17 @@ const Report = () => {
       });
     
     //Details View
-
-     const convertdate = (element) => {
+    const convertdate = (element) => {
         const dataDate = new Date(element);
 
-        const dataDayOfMonth = dataDate.getDate();
-        const dataMonth = dataDate.getMonth(); // Be careful! January is 0, not 1
-        const dataYear = dataDate.getFullYear();
+        // const dataDayOfMonth = dataDate.getDate();
+        // const dataMonth = dataDate.getMonth(); // Be careful! January is 0, not 1
+        // const dataYear = dataDate.getFullYear();
         
-        const dateString = dataDayOfMonth + "-" + (dataMonth + 1) + "-" + dataYear;
+        // const dateString = dataDayOfMonth + "-" + (dataMonth + 1) + "-" + dataYear;
         
+        const dateString = dataDate.toISOString().substr(0,10);
+
         return dateString;
 
      } 
@@ -118,6 +123,15 @@ const Report = () => {
           </tr>
         );
       });  
+
+    //Download to Excel
+
+    // const {onDownload} = useDownloadExcel({
+    //     currentTableRef: tableSummary.current,
+    //     filename: 'summary',
+    //     sheet: 'summary'
+    // })
+    
 
     return (
         <>
@@ -153,7 +167,8 @@ const Report = () => {
                         <div className="px-4 py-5 flex-auto">
                             <div className="tab-content tab-space">
                                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                                    <table className="table-auto">
+                                    {/* <Button type="button" text="Export to Excel" /> */}
+                                    <table className="table-auto" ref={tableSummary}>
                                         <thead>
                                             <tr>
                                                 <th className="font-normal text-slate-600 border-b p-4 pl-8 pt-0 pb-3 text-left">
