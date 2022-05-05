@@ -72,7 +72,7 @@ const Register = () => {
     return (
         <>
         <div className="flex flex-col items-center justify-center">
-            <h1 className='text-center m-10 text-xl'>Register</h1>
+            <h1 className='text-center m-4 text-xl'>Register</h1>
             <form onSubmit={onSubmitForm}>
                 <Input type="text" name="name" value={name} onChange={onChange} htmlFor="name" label="Username"/>
                 <Input type="email" name="email" value={email} onChange={onChange} htmlFor="email" label="Email"/>

@@ -194,7 +194,7 @@ const ResultList = () => {
                 quantity_sold:""
             })
 
-            const responseSearch = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
+            const responseSearch = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/%25`, {
             method: "GET",
             headers: {token: localStorage.token},
             });
