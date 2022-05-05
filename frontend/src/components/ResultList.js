@@ -211,50 +211,13 @@ const ResultList = () => {
     }
 
 
-    // const onSubmitDeleteModal = async(element) => {
-        
-    //     try {
-    //         let indexdelete = pdtCtx.productlist.indexOf(element);
-    //         console.log(indexdelete);
-    //         const iddelete = pdtCtx.productlist[indexdelete]["product_id"];
-
-    //         const response = await fetch (`http://localhost:5001/products/${iddelete}`, {
-    //         method: "DELETE",
-    //         headers: {token: localStorage.token},
-    //          });
-
-    //         const parseRes = await response.json();
-
-    //         if (parseRes === "product with sales record cannot be deleted") {
-    //             toast.error(parseRes)
-    //         } else {
-    //             toast.success(parseRes)
-    //         }
-
-    //         const responseSearch = await fetch (`http://localhost:5001/products/search/${code.toUpperCase()}/${size}`, {
-    //         method: "GET",
-    //         headers: {token: localStorage.token},
-    //         });
-
-    //         const parseResSearch = await responseSearch.json();
-
-    //         console.log(parseResSearch);
-    //         pdtCtx.setProductList(parseResSearch);
-            
-    //     } catch (err) {
-    //         console.error(err.message)
-    //     }
-    // }
-
-
     //View List
     const computePercent = (qty, qtyoptimal) => {
         const percent = Math.floor(((qty/qtyoptimal) * 100));
         return percent;
     };
 
-    // pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
-    
+   
     const viewList = pdtCtx.productlist.map((element, index) => {
         return (
             <tr key={index} className="bg-white border border-grey-500 md:border-none block md:table-row">
