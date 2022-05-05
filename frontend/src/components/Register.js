@@ -16,10 +16,11 @@ const Register = () => {
     const [registerInputs, setRegisterInputs] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        permission:""
     })
 
-    const {name, email, password} = registerInputs;
+    const {name, email, password, permission} = registerInputs;
 
     const onChange = (e) => {
         setRegisterInputs({...registerInputs, [e.target.name] : e.target.value})
@@ -29,7 +30,7 @@ const Register = () => {
         e.preventDefault()
         try {
             
-            const body = {name, email, password};
+            const body = {name, email, password, permission};
 
             const response = await fetch("http://localhost:5001/auth/register", {
                 method: "POST",
@@ -67,6 +68,14 @@ const Register = () => {
                 <Input type="text" name="name" value={name} onChange={onChange} htmlFor="name" label="Username"/>
                 <Input type="email" name="email" value={email} onChange={onChange} htmlFor="email" label="Email"/>
                 <Input type="password" name="password" value={password} onChange={onChange} htmlFor="password" label="Password"/>
+                <div className="mb-6 mr-6 w-40">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Role</label>
+                    <select className="w-full h-12 px-4 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg focus:border-blue focus:outline-none focus:ring focus:ring-blue focus:ring-opacity-20 p-1" name="permission" onChange={onChange}>
+                        <option value="">Select below</option>
+                        <option value="STAFF">STAFF</option>
+                        <option value="SUP">SUP</option>
+              </select>
+            </div>
                 <Button type="submit" text="Submit" />
             </form>  
             <p className="p-5 text-sm">
