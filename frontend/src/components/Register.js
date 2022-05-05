@@ -74,7 +74,7 @@ const Register = () => {
         <div className="flex flex-col items-center justify-center">
             <h1 className='text-center m-4 text-xl'>Register</h1>
             <form onSubmit={onSubmitForm}>
-                <Input type="text" name="name" value={name} onChange={onChange} htmlFor="name" label="Username"/>
+                <Input type="text" name="name" value={name} onChange={onChange} htmlFor="name" label="Name"/>
                 <Input type="email" name="email" value={email} onChange={onChange} htmlFor="email" label="Email"/>
                 <div className='flex flex-row'><Input type={seePwd?"text" :"password"} name="password" value={password} onChange={onChange} htmlFor="password" label="Password"/> <span
                 className="ml-2 text-primary hover:text-primary hover: cursor-pointer"
