@@ -213,7 +213,7 @@ const ResultList = () => {
 				    </tbody>
 	            </table>
             </div>
-            {addQty? <AddQtyModal onClickClose={onClickClose} modalCode={singlePdt[0]["code"]} modalName={singlePdt[0]["name"]} modalSize={singlePdt[0]["size"]} modalOption={singlePdt[0]["option"]} modalQty={singlePdt[0]["quantity"]} increaseQty={qtyToIncrease} onChange={(e) => setQtyToIncrease(e.target.value)} onSubmitModal={onSubmitModal}/> : null}
+            {addQty? <AddQtyModal onClickClose={onClickClose} modalCode={singlePdt[0]["code"]} modalName={singlePdt[0]["name"]} modalSize={singlePdt[0]["size"]} modalOption={singlePdt[0]["option"]} modalQty={singlePdt[0]["quantity"]} increaseQty={qtyToIncrease} onChange={(e) => setQtyToIncrease(e.target.value)} createdBy={singlePdt[0]["created_name"]}onSubmitModal={onSubmitModal}/> : null}
         </>
     );
 };

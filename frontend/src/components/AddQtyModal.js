@@ -4,7 +4,7 @@ import React from 'react';
 import InputBox from './assets/InputBox';
 import Button from './assets/Button';
 
-const AddQtyModal = ({onClickClose, modalCode, modalName, modalSize, modalOption, modalQty, increaseQty, onChange, onSubmitModal}) => {
+const AddQtyModal = ({onClickClose, modalCode, modalName, modalSize, modalOption, modalQty, increaseQty, onChange, createdBy, onSubmitModal}) => {
 
     return (
     <>
@@ -49,6 +49,7 @@ const AddQtyModal = ({onClickClose, modalCode, modalName, modalSize, modalOption
                                 </div>
                                 <InputBox className="mb-6 mr-6 w-40" label="Add" type="number" name="increase" value={increaseQty} onChange={onChange}/>
                             </div>
+                            <p><span className='font-bold'>Created by:</span><span><em> {createdBy}</em></span></p>
                         </div>
                         <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
                             <Button type="submit" text="Confirm" />
