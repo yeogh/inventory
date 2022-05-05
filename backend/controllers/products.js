@@ -45,7 +45,7 @@ productsRouter.get("/userid", authorization, async (req, res) => {
 productsRouter.get("/search/:code/:size", authorization, async (req, res) => {
     try {
         const {code, size} = req.params;
-        const resultProducts = await pool.query("SELECT * FROM products WHERE code = $1 AND size LIKE $2", [code, size]);
+        const resultProducts = await pool.query("SELECT * FROM products WHERE code = $1 AND size LIKE $2 ORDER BY size, product_id DESC", [code, size]);
         res.json(resultProducts.rows);
         console.log(req.params);
 

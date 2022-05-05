@@ -253,7 +253,7 @@ const ResultList = () => {
         return percent;
     };
 
-    pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
+    // pdtCtx.setProductList(pdtCtx.productlist.sort((a, b) => b.product_id - a.product_id));
     
     const viewList = pdtCtx.productlist.map((element, index) => {
         return (
@@ -280,7 +280,7 @@ const ResultList = () => {
         <>
             <div id="result">
                 <h2 className="text-base p-2 text-gray-700">
-                List of Results
+                List of Results {`(${pdtCtx.productlist.length} record(s))`}
                 </h2>
                 <table className="min-w-full border-collapse block md:table">
 	                <thead className="block md:table-header-group">
