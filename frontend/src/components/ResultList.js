@@ -269,7 +269,8 @@ const ResultList = () => {
                     {/* <ButtonMinus element={element}/> */}
                     <button className="btn bg-green-500 hover:bg-green-700 text-white border border-green-500 rounded-lg text-2xl px-4" onClick={() => onClickMinus(element)}>-</button>
                     <button className="btn bg-yellow-500 hover:bg-yellow-700 text-white border border-yellow-500 rounded-lg text-2xl px-3 ml-5" data-modal-toggle="defaultModal" onClick={() => onClickPlus(element)}>+</button>
-                    <button className="btn bg-red-500 hover:bg-red-700 text-white py-1 px-2 border border-red-500 rounded-lg normal-case ml-5" onClick={() => onClickDelete(element)}>Delete</button>
+                    {pdtCtx.userPermission? 
+                    <button className="btn bg-red-500 hover:bg-red-700 text-white py-1 px-2 border border-red-500 rounded-lg normal-case ml-5" onClick={() => onClickDelete(element)}>Delete</button> : ""}
                 </td>
             </tr>
         );

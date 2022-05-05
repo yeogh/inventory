@@ -30,6 +30,10 @@ function App() {
 
   const [productlist, setProductList] = useState([]);
   
+  const [userPermission, setUserPermission] = useState(false);
+
+
+
   async function isAuth() {
 
     try {
@@ -55,7 +59,7 @@ function App() {
 
   return (
     <>
-    <ProductContext.Provider value={{isAuthenticated, setAuth, searchInputs, setSearchInputs, productlist, setProductList
+    <ProductContext.Provider value={{isAuthenticated, setAuth, searchInputs, setSearchInputs, productlist, setProductList, userPermission, setUserPermission
     }}>
     <div className="container">
       <main>

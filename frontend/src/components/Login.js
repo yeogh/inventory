@@ -44,6 +44,9 @@ const Login = () => {
                 pdtCtx.setAuth(true);
 
                 toast.success("login successfully!")
+
+                console.log(parseRes);
+
             } else {
                 pdtCtx.setAuth(false);
                 toast.error(parseRes);

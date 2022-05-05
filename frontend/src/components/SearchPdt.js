@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import ProductContext from "./product-context";
 
 //Assets
@@ -11,6 +11,34 @@ const SearchPdt = () => {
   const pdtCtx = useContext(ProductContext);
 
   const {code, size} = pdtCtx.searchInputs;
+
+  //Get user permission
+  async function getUserPermission () {
+    try {
+        const responseUser = await fetch("http://localhost:5001/products/userid", {
+            method: "GET",
+            headers: {token: localStorage.token}
+    })
+    const parseResUser = await responseUser.json();
+    
+    if (parseResUser.permission === "SUP") {
+      pdtCtx.setUserPermission(true);
+    } else {
+      pdtCtx.setUserPermission(false);
+    }
+      
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+useEffect(() => {
+    getUserPermission()
+}, [])
+
+console.log(pdtCtx.userPermission);
+
+//Event handler
 
   const onChange = (e) => {
     pdtCtx.setSearchInputs({...pdtCtx.searchInputs, [e.target.name] : e.target.value})
