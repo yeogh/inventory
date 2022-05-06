@@ -20,13 +20,25 @@ Through this capstone project, I hope to:
  1. [Figma wireframe](https://www.figma.com/file/DX7BSDh7fJHDqn5G6TrD9m/Project-4?node-id=0%3A1) was used for planning of features
 2. Based on brief idea of required features, identified data required and database design
 ![Data Modelling](project4_datamodelling.png)   
-3. 
 
+List of available [endpoints](https://docs.google.com/spreadsheets/d/1GX5WLTCAC3pTVwTrhteLhfgTpHg6ivFIWJyvFDzNUAo/edit?usp=sharing) created for the app
 
 ### Features
+- When not login, users will be redirected to the login page if they enter url of the landing page
+- Landing page is defaulted to the Search Product page where users can search by product code and size (dropdown list)
+- Records will then be retrieved with options for users to update sale, restock or delete product. To make it easy for seniors to relate to what each button does, minus and plus sign as well as primary colours (green, yellow and red) is used. 
+The result list is designed to be mobile responsive.
+Desktop view
+![Result List (desktop view)](project4_screenshot.png) 
+Mobile view
+![Result List (mobile view)](project4_screenshot_mobile.png)
+
+There are 2 levels of permissions (i.e. staff and supervisor).
+Only account with supervisor permission can Create and Delete products. 
 
 
-### Possible Further Features and complications
-- Allow dynamic addition of Size not already in dropdown list
-- Allow updating of other data (e.g. optimal option)
+
+### Possible Further Enhancement
+- Allow dynamic addition of size not already in dropdown list
+- Allow updating of other data field (e.g. optimal option)
 - Allow export of report to excel
