@@ -47,4 +47,5 @@ Only account with supervisor permission can Create and Delete products.
 - Allow dynamic addition of size not already in dropdown list
 - Allow updating of other data field (e.g. optimal option)
 - Allow export of report to excel
+- Disable selection of future dates for Report date range. For 2nd date selection, disable dates earlier than first date.
 - Further refactoring of the codes
