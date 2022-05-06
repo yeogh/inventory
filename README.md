@@ -27,11 +27,9 @@ List of available [endpoints](https://docs.google.com/spreadsheets/d/1GX5WLTCAC3
 - When not login, users will be redirected to the login page if they enter url of the landing page
 - Landing page is defaulted to the Search Product page where users can search by product code and size (dropdown list)
 - Records will then be retrieved with options for users to update sale, restock or delete product. To make it easy for seniors to relate to what each button does, minus and plus sign as well as primary colours (green, yellow and red) is used. 
-The result list is designed to be mobile responsive.
-Desktop view
-![Result List (desktop view)](project4_screenshot.png) 
-Mobile view
-![Result List (mobile view)](project4_screenshot_mobile.png)
+- Result list is designed to be mobile responsive.
+Desktop View ![Result List (desktop view)](project4_screenshot.png) 
+Mobile view ![Result List (mobile view)](project4_screenshot_mobile.png)
 
 There are 2 levels of permissions (i.e. staff and supervisor).
 Only account with supervisor permission can Create and Delete products. 
