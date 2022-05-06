@@ -27,7 +27,7 @@ List of available [endpoints](https://docs.google.com/spreadsheets/d/1GX5WLTCAC3
 
 ### Features
 - When not **login**, users will be redirected to the login page if they enter url of the landing page
-- Validation during registration include checking that there is no account with same email and meet password complexity criteria.
+- Validation during **registration** include checking that there is no account with same email and meet password complexity criteria.
 - Landing page is defaulted to the **Search** Product page where users can search by product code and size (dropdown list)
 - Records will then be retrieved with options for users to update sale, restock or delete product. 
 - To make it easy for seniors to relate to what each button does, minus and plus sign as well as primary colours (green, yellow and red) is used. 
