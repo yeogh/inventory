@@ -43,6 +43,8 @@ Only account with supervisor permission can Create and Delete products.
 - Validation is added to ensure only product with no sales record can be **deleted**.
 - The **Report** option allows users to retrieve sales record by date range which will return 2 views (**Summary** - summary of total sales for each product for the selected sorted by in descending order to reflect product with top sales first in the row; **Details** - listing the details of the date and time the sales took place for possible monitoring time of sales). 
 
+[Screenshots](https://docs.google.com/presentation/d/1uTPHRD0GLC7LUQnHgoRuFr7BBENSuVGEsZUAW13xJcY/edit?usp=sharing) of app features
+
 ### Possible Further Enhancement
 - Allow dynamic addition of size not already in dropdown list
 - Allow updating of other data field (e.g. optimal option)
