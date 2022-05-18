@@ -163,6 +163,7 @@ const Report = () => {
             label="To"
             type="date"
             min={startdate}
+            max={todayuse}
             name="enddate"
             value={enddate}
             onChange={onChange}
