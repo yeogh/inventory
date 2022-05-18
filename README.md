@@ -41,7 +41,9 @@ Mobile view ![Result List (mobile view)](project4_screenshot_mobile.png)
 Only account with supervisor permission can Create and Delete products. 
 - Supervisor can **create** a new product if not already exist in the db. There is a validation by checking that the product code, size and option does not match any entry in the db before a new entry is added.
 - Validation is added to ensure only product with no sales record can be **deleted**.
-- The **Report** option allows users to retrieve sales record by date range which will return 2 views (**Summary** - summary of total sales for each product for the selected sorted by in descending order to reflect product with top sales first in the row; **Details** - listing the details of the date and time the sales took place for possible monitoring time of sales). 
+- The **Report** option allows users to retrieve sales record by date range* which will return 2 views (**Summary** - summary of total sales for each product for the selected sorted by in descending order to reflect product with top sales first in the row; **Details** - listing the details of the date and time the sales took place for possible monitoring time of sales). 
+
+*(disabled selection of future dates for Report date range; for 2nd date selection, disabled dates earlier than first date)*
 
 [Screenshots](https://docs.google.com/presentation/d/1uTPHRD0GLC7LUQnHgoRuFr7BBENSuVGEsZUAW13xJcY/edit?usp=sharing) of app features
 
