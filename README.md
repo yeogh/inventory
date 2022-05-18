@@ -23,7 +23,8 @@ Through this capstone project, I hope to:
 2. Based on brief idea of required features, identified data required and [database design](https://lucid.app/lucidchart/1c399b73-8949-4040-9380-5b4d2769d832/edit?invitationId=inv_3dd559a5-5cb4-400f-abf3-444a8ea19182)
 ![Data Modelling](project4_datamodelling.png)   
 
-List of available [endpoints](https://docs.google.com/spreadsheets/d/1GX5WLTCAC3pTVwTrhteLhfgTpHg6ivFIWJyvFDzNUAo/edit?usp=sharing) created for the app
+[Design overview](https://docs.google.com/presentation/d/1FB8KrZsCMwNcR7raa42zdmJnqe78Lg7IqvM5O3nBSCs/edit?usp=sharing) of FE, BE and DB.
+List of available [endpoints](https://docs.google.com/spreadsheets/d/1GX5WLTCAC3pTVwTrhteLhfgTpHg6ivFIWJyvFDzNUAo/edit?usp=sharing) created for the app.
 
 ### Features
 - When not **login**, users will be redirected to the login page if they enter url of the landing page
