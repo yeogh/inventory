@@ -20,7 +20,7 @@ Through this capstone project, I hope to:
 
 ### Approach
  1. [Figma wireframe](https://www.figma.com/file/DX7BSDh7fJHDqn5G6TrD9m/Project-4?node-id=0%3A1) was used for planning of features
-2. Based on brief idea of required features, identified data required and database design
+2. Based on brief idea of required features, identified data required and [database design](https://lucid.app/lucidchart/1c399b73-8949-4040-9380-5b4d2769d832/edit?invitationId=inv_3dd559a5-5cb4-400f-abf3-444a8ea19182)
 ![Data Modelling](project4_datamodelling.png)   
 
 List of available [endpoints](https://docs.google.com/spreadsheets/d/1GX5WLTCAC3pTVwTrhteLhfgTpHg6ivFIWJyvFDzNUAo/edit?usp=sharing) created for the app
